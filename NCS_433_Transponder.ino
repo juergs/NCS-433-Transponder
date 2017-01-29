@@ -1,7 +1,7 @@
 /* 
-**********************************************
-Version 1.0.1 20170129 juergs. Github upload.
-**********************************************
+    **********************************************
+    Version 1.0.1 20170129 juergs. Github upload.
+    **********************************************
 
 Printf-Formats:
 ==============
@@ -18,10 +18,20 @@ Printf-Formats:
 %n	    Number of characters written by this printf. No argument expected.
 %%	%.  No argument expected.
 
+*
+* The LaCrosse-protocol seems to be:
+    Bits 0-3: header
+    Bits 4-11: device ID, changes when replacing the batteries. Unlike in the post linked above, bit 11 does not appear to be a checksum.
+    Bits 12-15: either 1111 for automatic transmission (once every 60 seconds) or 1011 for manual transmission (using the button in the battery compartment). Manual transmission does not update the weather station.
+    Bits 16-27: encode the temperature. The system of encoding decimal digits seems to be ditched in favor of a more elegant one: apply a NOT (change 1 to 0 and 0 to 1), convert to base 10, divide by 10 (into a float), subtract 50, and the result is the temperature in C.
+    Bits 28-35: encode the relative humidity. Apply a NOT, convert to base 10, and the result is the relative humidity in %.
+    Bits 36-43: appear to encode a checksum (though I plan to double-check if this is not the dew point, also reported by the weather station).
+Example:
+    HHHH 1000 0010 1111 1101 0010 1111 1101 0011 1010 0100
+    encoding T=22.0C and RH=44%
+
 
 */
-
-
 
 #include <stdint.h>
 #include "fifo_buffer.h"
@@ -54,13 +64,13 @@ union proto_union
     struct proto_struct
     {
         unsigned long dummy : 22;
-        byte lead : 2;
-        byte id : 8;
-        byte bat : 2;
-        byte chan : 2;
+        byte lead   : 2;
+        byte id     : 8;
+        byte bat    : 2;
+        byte chan   : 2;
         unsigned short temp : 12;
-        byte hum : 8;
-        byte crc : 8;
+        byte hum    : 8;
+        byte crc    : 8;
     } d;
 } p;
 
@@ -186,7 +196,6 @@ void loop()
     }
     else
     {
-
         //digitalWrite(DEBUG_6_PIN, HIGH);
         unsigned long delta = millis() - start_time;
         if (delta > 5000)
