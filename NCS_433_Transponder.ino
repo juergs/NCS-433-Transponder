@@ -98,14 +98,19 @@ void setup()
     //Serial.begin(57600);
     Serial.begin(115200);
 
-    pinMode(PIN_SEND, OUTPUT);  // 433 Sender 
+    pinMode(PIN_SEND, OUTPUT);  // 433 TX sender 
     digitalWrite(PIN_SEND, LOW);
 
-    pinMode(RX433DATA, INPUT);
+    pinMode(RX433DATA, INPUT);      // 433 RX receiver
     attachInterrupt(RX433INTERRUPT, rx433Handler2, CHANGE);
-    pinMode(12, OUTPUT);
+    
+    pinMode(PIN_LED, OUTPUT);  // internal
+    digitalWrite(PIN_LED, LOW);
+    
+    pinMode(12, OUTPUT);        // External LED, flashes by receiving NCS-telegrams 
     digitalWrite(12, LOW);
 
+    /*
     pinMode(DEBUG_1_PIN, OUTPUT);
     digitalWrite(DEBUG_1_PIN, LOW);
 
@@ -124,8 +129,8 @@ void setup()
     pinMode(DEBUG_6_PIN, OUTPUT);
     digitalWrite(DEBUG_6_PIN, LOW);
 
-    pinMode(PIN_LED, OUTPUT);  // internal
-    digitalWrite(PIN_LED, LOW);
+*/ 
+    
 
     Serial.println("===============================================================");
     Serial.print(F("\tFree RAM: ")); Serial.println(freeRam());
@@ -144,7 +149,7 @@ void loop()
         noInterrupts();
 
         //--- debug flag - 
-        digitalWrite(DEBUG_2_PIN, HIGH);
+        //digitalWrite(DEBUG_2_PIN, HIGH);
 
         p.raw = 0;
 
@@ -173,7 +178,7 @@ void loop()
         if (ret == BUFFER_FAIL)
             printf("Buffer-IN-Error\n");
 
-        digitalWrite(DEBUG_2_PIN, LOW);
+        //digitalWrite(DEBUG_2_PIN, LOW);
 
         flagReady = false;
         interrupts();
@@ -186,7 +191,7 @@ void loop()
         if (delta > 5000)
         {
             //digitalWrite(PIN_LED, HIGH);
-            digitalWrite(DEBUG_6_PIN, HIGH);
+            //digitalWrite(DEBUG_6_PIN, HIGH);
             //printf("delta: %d\n", delta); 
             //printBufferRawValue(); printf("\t"); printBits(sizeof(uint64_t), &p.raw); 
             //printBuffer();
@@ -201,8 +206,10 @@ void loop()
         }
         */
     }
+    /*
     digitalWrite(DEBUG_6_PIN, LOW);
     digitalWrite(DEBUG_2_PIN, LOW);
+    */
     digitalWrite(PIN_LED, LOW);
 
 

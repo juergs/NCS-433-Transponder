@@ -1,4 +1,4 @@
-# NCS-433-Transponder
+# NCS-433-Transponder Version 2
 Converts NCS-7427 Sensors as repeater to LaCrosse protocoll
 
 
