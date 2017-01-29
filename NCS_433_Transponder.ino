@@ -76,12 +76,15 @@ union proto_union
 
 //======================================================================
 volatile boolean    flagReady = false;
-FILE                serial_stdout;                             // needed for printf 
+FILE                serial_stdout;    // needed for printf 
 volatile unsigned long long raw;
 volatile byte       buf[NC7427_MESSAGELEN];
 volatile bool       blinkLED = false;
 uint64_t            var;
 uint64_t            *pvar;
+unsigned long       previousMillis;
+unsigned long       interval = 5;
+byte                ledState;
 
 //====prototypes========================================================
 void    rx433Handler2();
