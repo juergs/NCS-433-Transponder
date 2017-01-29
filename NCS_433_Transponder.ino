@@ -477,7 +477,7 @@ void printBuffer()
         printf("------------------------------------------------------------\n");
         byte lacrosse_Id = p.d.id & 127; // strip msb while unsupported in LaCrosse
         LaCrosseSend(lacrosse_Id, tempC, (double)p.d.hum);
-        delay(2000); //2 Sekunden Pause zwischen den Repetitions 
+        delay(1000); //2 Sekunden Pause zwischen den Repetitions 
         printf("------------------------------------------------------------\n");
 
     }
