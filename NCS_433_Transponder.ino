@@ -234,13 +234,13 @@ void rx433Handler2()
     byte rx433PinState = digitalRead(RX433DATA);    //--- current pin state    
     if (rx433PinState)                          //--- pin is now HIGH -> fallende Flanke 
     {
-        rx433LineUp = micros();             //--- line went HIGH, after being LOW at this time  
-        LowVal = rx433LineUp - rx433LineDown; //--- calculate the LOW pulse time                                                 
-        isPulseSync = (LowVal > NC7427_SYNC - NC7427_GLITCH && LowVal < NC7427_SYNC + NC7427_SYNC_GLITCH);
-        isPulseForHigh = (LowVal > NC7427_ONE - NC7427_GLITCH  && LowVal < NC7427_ONE + NC7427_GLITCH);
-        isPulseForLow = (LowVal > NC7427_ZERO - NC7427_GLITCH && LowVal < NC7427_ZERO + NC7427_GLITCH);
+        rx433LineUp = micros();                 //--- line went HIGH, after being LOW at this time  
+        LowVal = rx433LineUp - rx433LineDown;   //--- calculate the LOW pulse time                                                 
+        isPulseSync =    (LowVal > NC7427_SYNC - NC7427_GLITCH  && LowVal < NC7427_SYNC + NC7427_SYNC_GLITCH);
+        isPulseForHigh = (LowVal > NC7427_ONE  - NC7427_GLITCH  && LowVal < NC7427_ONE  + NC7427_GLITCH);
+        isPulseForLow =  (LowVal > NC7427_ZERO - NC7427_GLITCH  && LowVal < NC7427_ZERO + NC7427_GLITCH);
         isPulseUndef = !(isPulseForHigh || isPulseForLow || isPulseSync);
-        //--- uncritical: 51uS for this calcs only
+        //--- uncritical: 51 us for this calcs 
 
         if (isPulseSync)
         {
