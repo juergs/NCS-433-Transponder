@@ -30,6 +30,9 @@
     <ClInclude Include="__vm\.NCS-433-Transponder.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="__vm\.NCS-433-Transponder2.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LaCrosse.cpp">
