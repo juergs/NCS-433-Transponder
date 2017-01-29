@@ -86,6 +86,7 @@ void    printBuffer();
 void    printBufferRawValue();
 void    printLongRaw(uint64_t raw);
 void    LaCrosseSend(byte sensorId, double temperature, double humidity);
+void    blinkLed();
 
 //=======================================================================
 
@@ -599,4 +600,15 @@ void LaCrosseSend(byte sensorId, double temperature, double humidity)
 
 }
 //----------------------------------------------------------------------------
+void blinkLed()
+{
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis > interval) {
+        previousMillis = currentMillis;
+        ledState = !ledState;
+        digitalWrite(LED_BUILTIN, ledState);
+    }
+}
+//-------------------------------------------------------------------------
+// <eof>
 //----------------------------------------------------------------------------
