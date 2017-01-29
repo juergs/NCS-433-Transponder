@@ -477,7 +477,7 @@ void printBuffer()
         printf("------------------------------------------------------------\n");
         byte lacrosse_Id = p.d.id & 127; // strip msb while unsupported in LaCrosse
         LaCrosseSend(lacrosse_Id, tempC, (double)p.d.hum);
-        delay(1000); //1 Sekunde Pause zwischen den Repetitions 
+        delay(2000); //2 Sekunden Pause zwischen den Repetitions 
         printf("------------------------------------------------------------\n");
 
     }
@@ -568,6 +568,8 @@ void LaCrosseSend(byte sensorId, double temperature, double humidity)
     digitalWrite(PIN_LED, HIGH);
     LaCrosse.sendTemperature();
     digitalWrite(PIN_LED, LOW);
+
+    LaCrosse.sleep(1); 
 
     LaCrosse.h = humidity;
     LaCrosse.bSensorId = sensorId;

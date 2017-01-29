@@ -1,13 +1,15 @@
+// NCS-433-Transponder Version
+// limited repetitions to 1 instead of 5
 
 #include <Arduino.h>
 #include "LaCrosse.h"
 
 #ifndef PIN_SEND
-	#define	PIN_SEND	12  // PB0 on Pin 5,  set TX to Arduino-D4 on PIN 3  
+	#define	PIN_SEND	5  // PB0 on Pin 5,  set TX to Arduino-D4 on PIN 3  
 #endif 	
 
 #ifndef SENSORID
-	#define SENSORID		122
+	#define SENSORID		125
 #endif 
 
 #define MODELID		0x0A   //--- LaCrosse-Protocol: Fix defines a TX3 Sensor
@@ -15,9 +17,9 @@
 #define COM_HUM		0x0E   //--- Command key for Transmitting Humidity
 
 #define DELAYTIME	60				//--- 1 Minutes delay between Measaurements
-#define REPEATMSG   5				//--- No of repeats of radio message
+#define REPEATMSG   1				//--- No of repeats of radio message, was 5 Repeats are handled by ringbuffer repetitions
 
-volatile uint8_t bSensorId = 100;
+volatile uint8_t bSensorId = 125;   //
 
 //--- Message String for // Serial Debug + sprintf buffers
 char msg[80];
